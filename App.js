@@ -1,94 +1,54 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type { Node } from 'react';
+import React, {
+  Component,
+} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
+  AppRegistry,
   StyleSheet,
-  Text,
-  useColorScheme,
   View,
+  StatusBar,
+  Platform,
+  SafeAreaView
 } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const MyStatusBar = ({backgroundColor, ...props}) => (
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <SafeAreaView>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </SafeAreaView>
+  </View>
+);
 
-const Section = ({ children, title }): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+class DarkTheme extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
+        {/* <View style={styles.appBar} /> */}
+        <View style={styles.content} />
+      </View>
+    );
+  }
+}
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-
-
-    <View style={{ flex: 1, backgroundColor: 'blue' }}>
-      <StatusBar translucent={true} backgroundColor={"transparent"}></StatusBar>
-      <Text style={{ backgroundColor: 'yellow' }}>HELLO</Text>
-      <Text style={{ backgroundColor: 'yellow' }}>HELLO</Text>
-      <Text style={{ backgroundColor: 'yellow' }}>HELLO</Text>
-    </View>
-
-  );
-};
+const STATUSBAR_HEIGHT = getStatusBarHeight();
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  appBar: {
+    backgroundColor:'#79B45D',
+    height: APPBAR_HEIGHT,
   },
-  highlight: {
-    fontWeight: '700',
+  content: {
+    flex: 1,
+    backgroundColor: '#33373B',
   },
 });
 
-export default App;
+export default DarkTheme;
